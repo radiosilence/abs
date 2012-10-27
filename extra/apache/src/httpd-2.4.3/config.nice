@@ -1,0 +1,28 @@
+#! /bin/sh
+#
+# Created by configure
+
+CFLAGS="-march=x86-64 -mtune=generic -O2 -pipe -fstack-protector --param=ssp-buffer-size=4 -D_FORTIFY_SOURCE=2 -DGLIB_COMPILATION"; export CFLAGS
+LDFLAGS="-Wl,-O1,--sort-common,--as-needed,-z,relro,--hash-style=gnu"; export LDFLAGS
+"./configure" \
+"--enable-layout=Arch" \
+"--enable-mpms-shared=prefork worker event" \
+"--enable-so" \
+"--enable-modules=all" \
+"--enable-mods-shared=all" \
+"--enable-ssl" \
+"--with-ssl" \
+"--enable-suexec" \
+"--enable-deflate" \
+"--with-suexec-caller=http" \
+"--with-suexec-docroot=/srv/http" \
+"--with-suexec-logfile=/var/log/httpd/suexec.log" \
+"--with-suexec-bin=/usr/sbin/suexec" \
+"--with-suexec-uidmin=99" \
+"--with-suexec-gidmin=99" \
+"--with-pcre=/usr" \
+"--with-apr=/usr/bin/apr-1-config" \
+"--with-apr-util=/usr/bin/apu-1-config" \
+"CFLAGS=-march=x86-64 -mtune=generic -O2 -pipe -fstack-protector --param=ssp-buffer-size=4 -D_FORTIFY_SOURCE=2 -DGLIB_COMPILATION" \
+"LDFLAGS=-Wl,-O1,--sort-common,--as-needed,-z,relro,--hash-style=gnu" \
+"$@"
