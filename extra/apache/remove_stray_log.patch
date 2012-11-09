@@ -1,0 +1,12 @@
+--- server/log.c	2012/10/18 15:51:25	1399707
++++ server/log.c	2012/10/18 15:55:46	1399708
+@@ -1088,7 +1088,8 @@
+     }
+ #ifdef HAVE_SYSLOG
+     else {
+-        syslog(level < LOG_PRIMASK ? level : APLOG_DEBUG, "%s", errstr);
++        syslog(level < LOG_PRIMASK ? level : APLOG_DEBUG, "%.*s",
++               (int)len, errstr);
+     }
+ #endif
+ }

@@ -2,10 +2,11 @@
 # Maintainer: Jan de Groot <jgc@archlinux.org>
 # Contributor: Andrea Scarpino <andrea@archlinux.org>
 # Contributor: Pierre Schmitz <pierre@archlinux.de>
+# Contributor: James Cleveland <jc@blackflags.co.uk>
 
 pkgname=apache
 pkgver=2.4.3
-pkgrel=1
+pkgrel=2
 pkgdesc='A high performance Unix-based HTTP server (tealc edition)'
 arch=('i686' 'x86_64')
 options=('!libtool')
@@ -22,6 +23,10 @@ install=apache.install
 source=(http://www.apache.org/dist/httpd/httpd-${pkgver}.tar.bz2
         http://www.apache.org/dist/httpd/httpd-${pkgver}.tar.bz2.asc
         apachectl-confd.patch
+        remove_stray_log.patch
+        add_tls_next_support.patch
+        httpd-2.4-rfc5878.patch
+        ssl-TLS-SRP-2_4.patch
         apache.conf.d
         apache.tmpfiles.conf
         httpd.logrotate
@@ -31,6 +36,10 @@ source=(http://www.apache.org/dist/httpd/httpd-${pkgver}.tar.bz2
 md5sums=('87aaf7bc7e8715f0455997bb8c6791aa'
          'c65a2229a7d15bc6f0e9730fc929a5c7'
          '4ac64df6e019edbe137017cba1ff2f51'
+         '2da2e2ce8512fa237218f40e726687f4'
+         '145f556420c874ba506249d1758f7d87'
+         'ecaf89e7ad5bd13be50cc0a6d6115e67'
+         '8e28ab8d68eaaa943cda126c4959ad9c'
          '08b3c875f6260644f2f52b4056d656b0'
          '82068753dab92fe86312b1010a2904d7'
          '6382331e9700ed9e8cc78ea51887b537'
@@ -41,7 +50,11 @@ md5sums=('87aaf7bc7e8715f0455997bb8c6791aa'
 build() {
 	cd "${srcdir}/httpd-${pkgver}"
 
-	patch -Np0 -i "${srcdir}/apachectl-confd.patch"
+    patch -Np0 -i "${srcdir}/apachectl-confd.patch"
+    patch -Np0 -i "${srcdir}/remove_stray_log.patch"
+    patch -Np0 -i "${srcdir}/add_tls_next_support.patch"
+    #patch -Np0 -i "${srcdir}/httpd-2.4-rfc5878.patch"
+    #patch -Np0 -i "${srcdir}/ssl-TLS-SRP-2_4.patch"
 
 	# set default user
 	sed -e 's#User daemon#User http#' \
