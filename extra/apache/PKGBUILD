@@ -19,7 +19,6 @@ backup=(etc/conf.d/apache etc/httpd/conf/httpd.conf
 depends=('openssl' 'zlib' 'apr-util' 'pcre')
 optdepends=('lynx: apachectl status')
 install=apache.install
-_itkurl=http://mpm-itk.sesse.net/apache2.2-mpm-itk-2.2.17-01
 source=(http://www.apache.org/dist/httpd/httpd-${pkgver}.tar.bz2
         http://www.apache.org/dist/httpd/httpd-${pkgver}.tar.bz2.asc
         apachectl-confd.patch
