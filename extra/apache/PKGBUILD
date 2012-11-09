@@ -6,7 +6,7 @@
 
 pkgname=apache
 pkgver=2.4.3
-pkgrel=2
+pkgrel=3
 pkgdesc='A high performance Unix-based HTTP server (tealc edition)'
 arch=('i686' 'x86_64')
 options=('!libtool')
@@ -53,8 +53,8 @@ build() {
     patch -Np0 -i "${srcdir}/apachectl-confd.patch"
     patch -Np0 -i "${srcdir}/remove_stray_log.patch"
     patch -Np0 -i "${srcdir}/add_tls_next_support.patch"
-    #patch -Np0 -i "${srcdir}/httpd-2.4-rfc5878.patch"
-    #patch -Np0 -i "${srcdir}/ssl-TLS-SRP-2_4.patch"
+    patch -Np0 -i "${srcdir}/httpd-2.4-rfc5878.patch"
+    patch -Np0 -i "${srcdir}/ssl-TLS-SRP-2_4.patch"
 
 	# set default user
 	sed -e 's#User daemon#User http#' \
