@@ -1,0 +1,44 @@
+# $Id: PKGBUILD 149346 2012-02-07 01:25:49Z bisson $
+# Contributor: dorphell <dorphell@archlinux.org>
+# Maintainer: Gaetan Bisson <bisson@archlinux.org>
+
+pkgname=w3m
+pkgver=0.5.3
+pkgrel=3
+pkgdesc='Text-based Web browser, as well as pager'
+url='http://w3m.sourceforge.net/'
+license=('custom')
+arch=('i686' 'x86_64')
+makedepends=('imlib2')
+optdepends=('imlib2: for graphics support') 
+depends=('openssl' 'gc' 'ncurses')
+source=("http://downloads.sourceforge.net/sourceforge/w3m/${pkgname}-${pkgver}.tar.gz"
+        'https-segfault.patch')
+sha1sums=('444b6c8cf7094ee95f8e9de96b37f814b9d83237'
+          '66affb2f695fe0bdde25cf774642bfd6a9404e88')
+
+build() {
+	cd "${srcdir}/${pkgname}-${pkgver}"
+
+	sed 's/file_handle/file_handle_rofl/g' -i istream.*
+	patch -p1 -i ../https-segfault.patch
+
+	./configure \
+        --enable-ansi-color \
+		--prefix=/usr \
+		--libexecdir=/usr/lib \
+		--with-imagelib=imlib2 \
+		--with-termlib="terminfo mytinfo ncurses" \
+		--disable-w3mmailer \
+        --enable-image=autodetect
+	make
+}
+
+package() {
+	cd "${srcdir}/${pkgname}-${pkgver}"
+	make DESTDIR="${pkgdir}" install
+
+	install -d "${pkgdir}"/usr/share/{doc,licenses}/"${pkgname}"
+	find doc/* | grep -v CVS | xargs -i install "{}" "${pkgdir}/usr/share/doc/${pkgname}"
+	ln -s ../../doc/"${pkgname}"/README "${pkgdir}/usr/share/licenses/${pkgname}"
+}
